@@ -1,0 +1,17 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "attach",
+            "name": "针对 localhost 启动 Chrome",
+            "port": 9222,
+            "webRoot": "${workspaceFolder}/src/renderer", // 修改为正确的路径
+            "url": "http://localhost:3000", // 确保端口号与 webpack 配置一致
+            "timeout": 30000
+        }
+    ]
+}

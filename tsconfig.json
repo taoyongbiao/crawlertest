@@ -1,0 +1,47 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // 目标 ECMAScript 版本
+    "module": "NodeNext", // 使用 NodeNext 模块系统
+    "moduleResolution": "NodeNext", // 使用 NodeNext 模块解析策略
+    "esModuleInterop": true, // 允许 CommonJS 和 ES 模块之间的互操作
+    "skipLibCheck": true, // 跳过声明文件的类型检查
+    "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
+    "jsx": "react", // 或者 "react-jsx" 
+    "strict": true, // 启用所有严格类型检查选项
+    "noImplicitAny": false, // 不允许隐式的 any 类型 是否使用类型推断
+    "strictNullChecks": true, // 启用严格的 null 检查
+    "strictFunctionTypes": true, // 启用严格的函数类型检查
+    "strictBindCallApply": true, // 启用严格的 bind/call/apply 检查
+    "strictPropertyInitialization": true, // 启用严格的属性初始化检查
+    "noImplicitThis": true, // 不允许隐式的 this 类型
+    "alwaysStrict": true, // 在所有文件中启用严格模式
+
+    "noEmit": true, // 不生成输出文件
+    "allowImportingTsExtensions": true, // 允许导入 .ts 扩展的文件
+
+    "noUnusedLocals": true, // 报告未使用的局部变量
+    "noUnusedParameters": true, // 报告未使用的参数
+    "noImplicitReturns": true, // 报告函数中缺少返回值的情况
+    "noFallthroughCasesInSwitch": true, // 报告 switch 语句中缺少 break 的情况
+    "noUncheckedIndexedAccess": true, // 启用严格的索引访问检查
+    "noPropertyAccessFromIndexSignature": true, // 禁止通过索引签名访问对象属性
+    "useUnknownInCatchVariables": true, // 在 catch 子句中使用 unknown 类型
+    "resolveJsonModule": true, // 允许导入 JSON 文件
+    "isolatedModules": true, // 启用隔离模块，适用于某些构建工具
+    "outDir": "./dist", // 输出目录
+    "rootDir": "./src", // 根目录
+    "baseUrl": "./", // 基础目录
+    "paths": {
+      "*": ["node_modules/*", "src/types/*"] // 路径映射
+    },
+    "lib": ["ESNext", "DOM"], // 包含的库文件
+    "types": ["node"], // 包含的类型定义
+    "experimentalDecorators": true, // 启用实验性的装饰器
+    "emitDecoratorMetadata": true, // 启用装饰器元数据的发射
+    "sourceMap": true, // 生成源映射文件
+    "inlineSources": true, // 将源代码嵌入到源映射文件中
+    "pretty": true // 格式化输出
+  },
+  "include": ["src/**/*"], // 包含的文件
+  "exclude": ["node_modules", "dist"] // 排除的文件
+}
