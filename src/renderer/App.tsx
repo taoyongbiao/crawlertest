@@ -14,27 +14,35 @@ import './App.css'; // 假设样式文件为 App.css
 function App() {
   return (
     <BrowserRouter>
-      <div className="app-container">
-        <div className="sidebar">
+      <div className="app-container flex">
+        <div className="sidebar w-64 bg-gray-800 text-white p-4 md:w-1/4">
           {/* Sidebar content will go here */}
           <nav>
             <ul>
               <li>
-                <a href="/">Home</a>
+                <a href="/" className="block py-2 px-4 hover:bg-gray-700">
+                  Home
+                </a>
               </li>
               <li>
-                <a href="/crawl-result">Crawl Result</a>
+                <a href="/crawl-result" className="block py-2 px-4 hover:bg-gray-700">
+                  Crawl Result
+                </a>
               </li>
               <li>
-                <a href="/ai-result">AI Process</a>
+                <a href="/ai-result" className="block py-2 px-4 hover:bg-gray-700">
+                  AI Process
+                </a>
               </li>
               <li>
-                <a href="/history">History</a>
+                <a href="/history" className="block py-2 px-4 hover:bg-gray-700">
+                  History
+                </a>
               </li>
             </ul>
           </nav>
         </div>
-        <div className="mainpane">
+        <div className="mainpane flex-1 p-4 md:p-8">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/crawl-result" element={<CrawlResultPage />} />

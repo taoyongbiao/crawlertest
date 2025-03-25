@@ -52,24 +52,24 @@ function HistoryPage() {
   }, []); // 空依赖数组确保只在组件挂载时执行一次
 
   return (
-    <div>
-      <h1>历史记录</h1>
-      <table>
+    <div className="p-4 md:p-8">
+      <h1 className="text-3xl font-bold mb-6 md:mb-8">历史记录</h1>
+      <table className="w-full border-collapse border border-gray-300 md:shadow-md">
         <thead>
           <tr>
-            <th>时间</th>
-            <th>URL</th>
-            <th>关键词</th>
-            <th>结果</th>
+            <th className="border border-gray-300 p-2 md:p-4">时间</th>
+            <th className="border border-gray-300 p-2 md:p-4">URL</th>
+            <th className="border border-gray-300 p-2 md:p-4">关键词</th>
+            <th className="border border-gray-300 p-2 md:p-4">结果</th>
           </tr>
         </thead>
         <tbody>
           {history.map((record, index) => (
             <tr key={index}>
-              <td>{record.timestamp}</td>
-              <td>{record.url}</td>
-              <td>{record.keywords.join(', ')}</td>
-              <td>{record.results}</td>
+              <td className="border border-gray-300 p-2 md:p-4">{record.timestamp}</td>
+              <td className="border border-gray-300 p-2 md:p-4">{record.url}</td>
+              <td className="border border-gray-300 p-2 md:p-4">{record.keywords.join(', ')}</td>
+              <td className="border border-gray-300 p-2 md:p-4">{record.results}</td>
             </tr>
           ))}
         </tbody>

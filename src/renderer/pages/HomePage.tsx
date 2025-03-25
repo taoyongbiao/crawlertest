@@ -16,17 +16,38 @@ function HomePage() {
   };
 
   return (
-    <div>
-      <h1>网页爬取</h1>
-      <div>
-        <label>URL:</label>
-        <input type="text" value={url} onChange={(e) => setUrl(e.target.value)} />
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
+      <h1 className="text-3xl font-bold mb-6">网页爬取</h1>
+      <div className="mb-4 w-full max-w-md">
+        <label htmlFor="url" className="block text-sm font-medium text-gray-700">
+          URL:
+        </label>
+        <input
+          type="text"
+          id="url"
+          value={url}
+          onChange={(e) => setUrl(e.target.value)}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+        />
       </div>
-      <div>
-        <label>关键词（逗号分隔）:</label>
-        <input type="text" value={keywords} onChange={(e) => setKeywords(e.target.value)} />
+      <div className="mb-6 w-full max-w-md">
+        <label htmlFor="keywords" className="block text-sm font-medium text-gray-700">
+          关键词（逗号分隔）:
+        </label>
+        <input
+          type="text"
+          id="keywords"
+          value={keywords}
+          onChange={(e) => setKeywords(e.target.value)}
+          className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+        />
       </div>
-      <button onClick={handleSubmit}>开始爬取</button>
+      <button
+        onClick={handleSubmit}
+        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+      >
+        开始爬取
+      </button>
     </div>
   );
 }

@@ -32,25 +32,30 @@ function CrawlResultPage() {
   };
 
   return (
-    <div>
-      <h1>爬取结果</h1>
-      <table>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-6">爬取结果</h1>
+      <table className="w-full border-collapse border border-gray-300">
         <thead>
           <tr>
-            <th>关键词</th>
-            <th>出现次数</th>
+            <th className="border border-gray-300 p-2">关键词</th>
+            <th className="border border-gray-300 p-2">出现次数</th>
           </tr>
         </thead>
         <tbody>
           {results.map((result, index) => (
             <tr key={index}>
-              <td>{result.keyword}</td>
-              <td>{result.count}</td>
+              <td className="border border-gray-300 p-2">{result.keyword}</td>
+              <td className="border border-gray-300 p-2">{result.count}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <button onClick={handleProcess}>提交AI处理</button>
+      <button
+        onClick={handleProcess}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+      >
+        提交AI处理
+      </button>
     </div>
   );
 }
