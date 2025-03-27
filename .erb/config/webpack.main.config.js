@@ -1,16 +1,21 @@
 import path from 'path';
 
-const __dirname = path.dirname(new URL(import.meta.url).pathname);
+// const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
   entry: './src/main/main.ts', // 主进程入口文件
   target: 'electron-main', // 指定目标为 Electron 主进程
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(process.cwd(), 'dist'),
     filename: 'main.bundle.js',
+    publicPath: '/',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'], // 解析规则
+  },
+  node: {
+    __dirname: false,
+    __filename: false,
   },
   module: {
     rules: [
