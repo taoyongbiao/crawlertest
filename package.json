@@ -2,7 +2,7 @@
   "name": "crawlertest",
   "version": "1.0.0",
   "description": "Web crawler application",
-  "main": "src/main/main.ts",
+  "main": "dist/main.bundle.js", 
   "type": "module",
   "scripts": {
     "start": "electron .",

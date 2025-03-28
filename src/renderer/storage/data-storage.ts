@@ -1,8 +1,3 @@
-import fs from 'fs/promises'; // 使用异步文件操作
-import path from 'path';
-
-const DATA_DIR = path.join(__dirname, '../../data');
-
 // 定义 HistoryRecord 类型
 interface HistoryRecord {
   id: string; // 数据ID
@@ -11,27 +6,13 @@ interface HistoryRecord {
 }
 
 export class DataStorage {
-  constructor() {
-    this.ensureDataDirExists();
-  }
-
-  private async ensureDataDirExists() {
-    try {
-      const stats = await fs.stat(DATA_DIR);
-      if (!stats.isDirectory()) {
-        throw new Error('Data directory exists but is not a directory');
-      }
-    } catch (error) {
-      console.error('Error accessing or creating data directory:', error);
-      await fs.mkdir(DATA_DIR, { recursive: true });
-    }
-  }
+  constructor() {}
 
   async saveRawData<T>(data: T): Promise<string> {
     const id = Date.now().toString();
-    const filePath = path.join(DATA_DIR, `${id}.json`);
+    const key = `rawData_${id}`;
     try {
-      await fs.writeFile(filePath, JSON.stringify(data));
+      localStorage.setItem(key, JSON.stringify(data));
       return id;
     } catch (error) {
       console.error('Error saving raw data:', error);
@@ -40,10 +21,13 @@ export class DataStorage {
   }
 
   async getRawData<T>(id: string): Promise<T> {
-    const filePath = path.join(DATA_DIR, `${id}.json`);
+    const key = `rawData_${id}`;
     try {
-      const data = await fs.readFile(filePath, 'utf-8');
-      return JSON.parse(data) as T;
+      const data = localStorage.getItem(key);
+      if (data) {
+        return JSON.parse(data) as T;
+      }
+      throw new Error('Data not found');
     } catch (error) {
       console.error('Error reading raw data:', error);
       throw error;
@@ -51,9 +35,9 @@ export class DataStorage {
   }
 
   async saveProcessedData<T>(id: string, data: T): Promise<void> {
-    const filePath = path.join(DATA_DIR, `${id}_processed.json`);
+    const key = `processedData_${id}`;
     try {
-      await fs.writeFile(filePath, JSON.stringify(data));
+      localStorage.setItem(key, JSON.stringify(data));
     } catch (error) {
       console.error('Error saving processed data:', error);
       throw error;
@@ -61,7 +45,7 @@ export class DataStorage {
   }
 
   getResultPath(id: string): string {
-    return path.join(DATA_DIR, `${id}_processed.json`);
+    return `processedData_${id}`;
   }
 
   // 获取历史记录
