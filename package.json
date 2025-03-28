@@ -2,7 +2,7 @@
   "name": "crawlertest",
   "version": "1.0.0",
   "description": "Web crawler application",
-  "main": "dist/main.bundle.js", 
+  "main": "dist/main.bundle.js",
   "type": "module",
   "scripts": {
     "start": "electron .",
@@ -43,6 +43,7 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "html-webpack-plugin": "^5.6.3",
     "jest": "^29.7.0",
+    "mini-css-extract-plugin": "^2.9.2",
     "postcss": "^8.5.3",
     "postcss-cli": "^10.1.0",
     "postcss-loader": "^8.1.1",
