@@ -1,11 +1,9 @@
-// 修复 'prettier/prettier' 规则未找到的问题，需要确保项目中安装了 Prettier 和 ESLint 插件
-// 可以通过以下命令安装：npm install --save-dev prettier eslint-plugin-prettier eslint-config-prettier
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
-import { resolveHtmlPath } from './util.ts'; // 统一使用 .ts 扩展名
-import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts'; // 统一使用 .ts 扩展名
-import { DataStorage } from '../renderer/storage/data-storage.ts'; // 统一使用 .ts 扩展名
-import { AIProcessor } from '../renderer/ai/ai-processor.ts'; // 统一使用 .ts 扩展名
+import { __dirname, resolveHtmlPath } from './util.ts'; // 移除 .ts 扩展名
+import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts'; // 移除 .ts 扩展名
+import { DataStorage } from '../renderer/storage/data-storage.ts'; // 移除 .ts 扩展名
+import { AIProcessor } from '../renderer/ai/ai-processor.ts'; // 移除 .ts 扩展名
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -16,7 +14,7 @@ const createWindow = async () => {
     webPreferences: {
       nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js'),
+      preload: path.join(__dirname, 'preload.js'), // 使用绝对路径
     },
   });
 
@@ -79,7 +77,8 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
-}); // 插入换行符后，这里可以根据实际情况添加代码逻辑，例如在 macOS 系统下，当所有窗口关闭时，如果应用程序还在激活状态，可以添加一些清理逻辑
+});
+
 if (process.platform === 'darwin') {
   app.on('will-quit', () => {
     // 可以在这里添加清理逻辑，例如关闭数据库连接等

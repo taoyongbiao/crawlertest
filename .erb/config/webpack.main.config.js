@@ -8,7 +8,11 @@ export default {
   output: {
     path: path.resolve(process.cwd(), 'dist'),
     filename: 'main.bundle.js',
-    publicPath: '/',
+    publicPath: './',
+    // clean: true,
+  },
+  experiments: {
+    outputModule: true, // 启用 ES 模块输出 electron-main默认生成commonjs模块
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'], // 解析规则
