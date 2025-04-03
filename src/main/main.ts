@@ -1,11 +1,15 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
-import { __dirname, resolveHtmlPath } from './util.ts'; // 移除 .ts 扩展名
-import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts'; // 移除 .ts 扩展名
-import { DataStorage } from '../renderer/storage/data-storage.ts'; // 移除 .ts 扩展名
-import { AIProcessor } from '../renderer/ai/ai-processor.ts'; // 移除 .ts 扩展名
+// import { fileURLToPath } from 'url';
+import { resolveHtmlPath } from './util.ts';
+import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts';
+import { DataStorage } from '../renderer/storage/data-storage.ts';
+import { AIProcessor } from '../renderer/ai/ai-processor.ts';
 
 let mainWindow: BrowserWindow | null = null;
+// const __dirname = path.dirname(fileURLToPath(import.meta.url)); //是 ES 模块的一个元属性，返回当前模块的 URL 字符串 file:///C:/Users/tao.yongbiao/Desktop/crawlertest/src/main/util.ts
+// 通过 fileURLToPath 将 URL 转换为文件路径
+//path.dirname 是 Node.js path 模块中的一个方法，用于获取路径的目录部分。
 
 const createWindow = async () => {
   mainWindow = new BrowserWindow({
@@ -13,10 +17,13 @@ const createWindow = async () => {
     height: 800,
     webPreferences: {
       nodeIntegration: false,
-      contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js'), // 使用绝对路径
+      contextIsolation: true, //将渲染器进程中的 Node.js 和 Electron API 与网页脚本隔离开
+      sandbox: false, // 启用沙箱模式
+      preload: path.join(__dirname, 'preload.js'), // 使用绝对路径 相对于主进程的 preload.js的路径
     },
   });
+  console.log('__dirname', __dirname);
+  console.log('__filedir', `${path.join(__dirname, 'preload.js').replace(/\\/g, '/')}`);
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 

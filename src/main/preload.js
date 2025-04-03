@@ -1,4 +1,3 @@
-// const { contextBridge, ipcRenderer } = require('electron');
 import { contextBridge, ipcRenderer } from 'electron';
 
 // 暴露 Node.js API 给渲染进程

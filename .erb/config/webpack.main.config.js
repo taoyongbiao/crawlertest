@@ -3,12 +3,13 @@ import path from 'path';
 // const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export default {
+  mode: 'production', // 设置 mode 选项为 development 或 production
   entry: './src/main/main.ts', // 主进程入口文件
   target: 'electron-main', // 指定目标为 Electron 主进程
   output: {
-    path: path.resolve(process.cwd(), 'dist'),
+    path: path.resolve(process.cwd(), 'dist'), //控制js css的实际输出目录
     filename: 'main.bundle.js',
-    publicPath: './',
+    publicPath: './', //控制在浏览器中的加载路径 以确保在不同环境中都能正确加载资源文件。
     // clean: true,
   },
   experiments: {
@@ -18,8 +19,8 @@ export default {
     extensions: ['.ts', '.tsx', '.js'], // 解析规则
   },
   node: {
-    __dirname: false,
-    __filename: false,
+    __dirname: true,// 解决__dirname报错的问题 
+    __filename: true,
   },
   module: {
     rules: [

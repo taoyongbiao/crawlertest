@@ -3,14 +3,15 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
-  mode: 'development', // 设置 mode 选项为 development 或 production
+  mode: 'production', // 设置 mode 选项为 development 或 production
   entry: './src/renderer/index.tsx', // 渲染进程入口文件
   target: 'electron-renderer', // 指定目标为 Electron 渲染进程
   output: {
-    path: path.resolve(process.cwd(), 'dist'), // 修改为项目根目录下的 dist 文件夹
+    path: path.resolve(process.cwd(), 'dist'), // 修改为项目根目录下的 dist 文件夹 js的文件
     filename: 'renderer.bundle.js',
     publicPath: './', // HtmlWebpackPlugin 插件的重要选项 指定生成的资源文件（如 JavaScript 和 CSS 文件）的公共路径前缀
-    //  /是相对于服务器的根目录  ./或不设置是相对于当前目录
+    //  /是相对于服务器的根目录  ./或不设置是相对于当前目录 以确保在不同环境中都能正确加载资源文件。
+    clean: true,
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'], // 解析规则
