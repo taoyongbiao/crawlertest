@@ -9,6 +9,7 @@
     "build": "webpack --config ./.erb/config/webpack.main.config.js && webpack --config ./.erb/config/webpack.renderer.config.js",
     "build:main": "webpack --config ./.erb/config/webpack.main.config.js",
     "build:renderer": "webpack --config ./.erb/config/webpack.renderer.config.js",
+    "build:preload": "webpack --config ./.erb/config//webpack.preload.config.js",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/config/webpack.renderer.config.js",
     "start:main": "cross-env NODE_ENV=development webpack serve --config ./.erb/config/webpack.main.config.js",
     "test": "jest",
@@ -54,6 +55,7 @@
     "typescript": "^5.3.0",
     "webpack": "^5.98.0",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.2.0"
+    "webpack-dev-server": "^5.2.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }

@@ -11,6 +11,7 @@ function CrawlResultPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const [results, setResults] = useState<Result[]>([]);
+  //从 useState 返回的结果中提取当前状态值和更新函数。
 
   useEffect(() => {
     const { url, keywords } = location.state || {};
@@ -19,7 +20,7 @@ function CrawlResultPage() {
       crawler
         .startCrawl(url, keywords)
         .then((data) => {
-          setResults(data.results);
+          setResults(data.result);
         })
         .catch((error) => {
           console.error('Crawl failed:', error);

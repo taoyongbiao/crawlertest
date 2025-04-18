@@ -1,29 +1,28 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import path from 'path';
-// import { fileURLToPath } from 'url';
+
 import { resolveHtmlPath } from './util.ts';
 import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts';
 import { DataStorage } from '../renderer/storage/data-storage.ts';
 import { AIProcessor } from '../renderer/ai/ai-processor.ts';
 
 let mainWindow: BrowserWindow | null = null;
-// const __dirname = path.dirname(fileURLToPath(import.meta.url)); //是 ES 模块的一个元属性，返回当前模块的 URL 字符串 file:///C:/Users/tao.yongbiao/Desktop/crawlertest/src/main/util.ts
-// 通过 fileURLToPath 将 URL 转换为文件路径
-//path.dirname 是 Node.js path 模块中的一个方法，用于获取路径的目录部分。
 
 const createWindow = async () => {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
     webPreferences: {
-      nodeIntegration: false,
+      webSecurity: false, // 禁用 Web 安全
+      nodeIntegration: false, // 渲染进程中禁用 Node.js 的相关api
       contextIsolation: true, //将渲染器进程中的 Node.js 和 Electron API 与网页脚本隔离开
       sandbox: false, // 启用沙箱模式
-      preload: path.join(__dirname, 'preload.js'), // 使用绝对路径 相对于主进程的 preload.js的路径
+      preload: path.resolve(__dirname, 'preload.js'), // 预加载脚本的路径 使用path.join拼接路径可能会存在相对路径
+      // 使用绝对路径 相对于主进程的 preload.js的路径
     },
   });
-  console.log('__dirname', __dirname);
-  console.log('__filedir', `${path.join(__dirname, 'preload.js').replace(/\\/g, '/')}`);
+
+  console.log('__filedir', resolveHtmlPath('index.html'));
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -38,7 +37,7 @@ const dataStorage = new DataStorage();
 const aiProcessor = new AIProcessor();
 
 // IPC 通信处理
-ipcMain.handle('start-crawl', async (event, { url, keywords }) => {
+ipcMain.handle('start-crawl', async (_event, { url, keywords }) => {
   try {
     const data = await crawlerManager.startCrawl(url, keywords);
     const id = await dataStorage.saveRawData(data);
@@ -50,7 +49,7 @@ ipcMain.handle('start-crawl', async (event, { url, keywords }) => {
 });
 
 // 处理数据
-ipcMain.handle('process-data', async (event, dataId) => {
+ipcMain.handle('process-data', async (_event, dataId) => {
   try {
     const rawData = await dataStorage.getRawData(dataId);
     const processedData = await aiProcessor.process(rawData);
@@ -62,7 +61,7 @@ ipcMain.handle('process-data', async (event, dataId) => {
   }
 });
 
-ipcMain.handle('open-result', (event, dataId) => {
+ipcMain.handle('open-result', (_event, dataId) => {
   try {
     const resultPath = dataStorage.getResultPath(dataId);
     shell.openPath(resultPath);

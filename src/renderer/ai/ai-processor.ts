@@ -19,7 +19,7 @@ export class AIProcessor {
         processedAt: new Date().toISOString(),
       };
     } catch (error) {
-      throw new Error(`AI处理失败: ${error.message}`);
+      throw new Error(`AI处理失败: ${(error as Error).message}`);
     }
   }
 }
