@@ -3,7 +3,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 export default {
-  mode: 'production', // 设置 mode 选项为 development 或 production
+  mode: 'development', // 设置 mode 选项为 development 或 production
   entry: './src/renderer/index.tsx', // 渲染进程入口文件
   target: 'electron-renderer', // 指定目标为 Electron 渲染进程
   output: {
@@ -24,7 +24,7 @@ export default {
           {
             loader: 'ts-loader',
             options: {
-              transpileOnly: true,
+              transpileOnly: true, // 仅编译，不进行类型检查
             },
           },
         ],
@@ -54,6 +54,8 @@ export default {
       directory: path.join(process.cwd(), 'dist'),
     },
     compress: true,
+    hot: true,
+    open: true,
     port: 3000, // 确保端口号与 launch.json 中的 url 一致
   },
   // 添加 node 字段以处理 global 变量
@@ -63,5 +65,5 @@ export default {
     __filename: false,
   },
   // 添加 stats 选项以输出详细的打包过程信息
-  // stats: 'verbose',
+  stats: 'verbose',
 };

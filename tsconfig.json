@@ -3,10 +3,12 @@
     "target": "ESNext", // 目标 ECMAScript 版本
     "module": "NodeNext", // 使用 NodeNext 模块系统
     "moduleResolution": "NodeNext", // 使用 NodeNext 模块解析策略
+
     "esModuleInterop": true, // 允许 CommonJS 和 ES 模块之间的互操作
     "skipLibCheck": true, // 跳过声明文件的类型检查
+
     "forceConsistentCasingInFileNames": true, // 强制文件名大小写一致
-    "jsx": "react", // 或者 "react-jsx" 
+    "jsx": "react", // 或者 "react-jsx"
     "strict": true, // 启用所有严格类型检查选项
     "noImplicitAny": false, // 不允许隐式的 any 类型 是否使用类型推断
     "strictNullChecks": true, // 启用严格的 null 检查
@@ -16,7 +18,10 @@
     "noImplicitThis": true, // 不允许隐式的 this 类型
     "alwaysStrict": true, // 在所有文件中启用严格模式
 
-    "noEmit": true, // 不生成输出文件
+    // "noEmit": false, // 不生成输出文件
+    // "allowImportingTsExtensions": false,
+
+    "noEmit": true, // 不生成输出文件，满足 allowImportingTsExtensions 使用条件
     "allowImportingTsExtensions": true, // 允许导入 .ts 扩展的文件
 
     "noUnusedLocals": true, // 报告未使用的局部变量
@@ -42,6 +47,6 @@
     "inlineSources": true, // 将源代码嵌入到源映射文件中
     "pretty": true // 格式化输出
   },
-  "include": ["src/**/*"], // 包含的文件
+  "include": ["src/**/*", "dist/preload.js"], // 包含的文件 , "dist/preload.js"
   "exclude": ["node_modules", "dist"] // 排除的文件
 }

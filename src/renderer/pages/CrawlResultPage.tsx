@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CrawlerManager } from '../crawlers/crawler-manager.ts';
+import { Result } from 'electron';
 
-interface Result {
-  keyword: string;
-  count: number;
-}
+// interface Result {
+//   keyword: string;
+//   count: number;
+// }
 
 function CrawlResultPage() {
   const location = useLocation();
@@ -45,8 +46,8 @@ function CrawlResultPage() {
         <tbody>
           {results.map((result, index) => (
             <tr key={index}>
-              <td className="border border-gray-300 p-2">{result.keyword}</td>
-              <td className="border border-gray-300 p-2">{result.count}</td>
+              <td className="border border-gray-300 p-2">{result.matches}</td>
+              <td className="border border-gray-300 p-2">{result.requestId}</td>
             </tr>
           ))}
         </tbody>

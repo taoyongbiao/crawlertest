@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, shell } from 'electron';
-import path from 'path';
-
+import path from 'path'; // ✅ 添加此行以导入 path 模块
+// import fs from 'fs/promises';
+import * as fs from 'fs/promises';
 import { resolveHtmlPath } from './util.ts';
 import { CrawlerManager } from '../renderer/crawlers/crawler-manager.ts';
 import { DataStorage } from '../renderer/storage/data-storage.ts';
@@ -16,15 +17,23 @@ const createWindow = async () => {
       webSecurity: false, // 禁用 Web 安全
       nodeIntegration: false, // 渲染进程中禁用 Node.js 的相关api
       contextIsolation: true, //将渲染器进程中的 Node.js 和 Electron API 与网页脚本隔离开
-      sandbox: false, // 启用沙箱模式
-      preload: path.resolve(__dirname, 'preload.js'), // 预加载脚本的路径 使用path.join拼接路径可能会存在相对路径
+      sandbox: false, // 沙箱模式是否启用contextBridge
+      // preload: path.resolve(__dirname, 'preload.js'), // 预加载脚本的路径 使用path.join拼接路径可能会存在相对路径
       // 使用绝对路径 相对于主进程的 preload.js的路径
     },
   });
 
   console.log('__filedir', resolveHtmlPath('index.html'));
 
-  mainWindow.loadURL(resolveHtmlPath('index.html'));
+  // mainWindow.loadURL(resolveHtmlPath('index.html'));
+
+  // 开发环境通常使用 devServer 地址
+  if (process.env['NODE_ENV'] === 'development') {
+    mainWindow.loadURL('http://localhost:3000');
+  } else {
+    // 生产环境加载打包后的 index.html
+    mainWindow.loadFile(path.join(__dirname, '../dist/index.html'));
+  }
 
   mainWindow.on('closed', () => {
     mainWindow = null;
@@ -38,6 +47,7 @@ const aiProcessor = new AIProcessor();
 
 // IPC 通信处理
 ipcMain.handle('start-crawl', async (_event, { url, keywords }) => {
+  //ipc事件的名称，在ipcrender invoke传入
   try {
     const data = await crawlerManager.startCrawl(url, keywords);
     const id = await dataStorage.saveRawData(data);
@@ -69,6 +79,15 @@ ipcMain.handle('open-result', (_event, dataId) => {
     console.error('Error opening result:', error);
     throw error;
   }
+});
+
+// 新增 ipcMain 处理程序
+ipcMain.handle('read-file', async (_event, path: string) => {
+  return await fs.readFile(path, 'utf-8');
+});
+
+ipcMain.handle('write-file', async (_event, path: string, data: string) => {
+  await fs.writeFile(path, data);
 });
 
 app.whenReady().then(() => {
